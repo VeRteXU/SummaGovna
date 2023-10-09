@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024  # 1 MB limit for uploaded files
 UPLOAD_FOLDER = './uploads'  # папка для загруженных файлов
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-RECAPTCHA_SITE_KEY = '6LcZaf8lAAAAAP7VmVPopieoDDN-xoCapufM03BS'
+RECAPTCHA_SITE_KEY = '6LdlLBAmAAAAADEkPEp1BIl_lbDYwzeE_n6lkhBt'
 
 # Image resizing endpoint
 @app.route('/contrast', methods=['POST'])
@@ -22,16 +22,14 @@ def contrast():
     # Check if a file was uploaded
     if not file:
         abort(400, 'No file was uploaded')
-
-    # Check if the uploaded file is an image
     if not file.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
         abort(400, 'File is not an image')
-    # Verify the captcha
+
     recaptcha_response = request.form.get('g-recaptcha-response')
     if not recaptcha_response:
         abort(400, 'reCAPTCHA verification failed')
     payload = {
-        'secret': '6LcZaf8lAAAAAP395pmCF33ej4pr3mtdttF58CJH',
+        'secret': '6LdlLBAmAAAAABbqK-N4kGXshV9m_96TNR9Ka6ER',
         'response': recaptcha_response
     }
     response = requests.post('https://www.google.com/recaptcha/api/siteverify', payload).json()
